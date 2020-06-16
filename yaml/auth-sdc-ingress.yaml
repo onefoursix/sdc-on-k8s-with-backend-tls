@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: auth-sdc
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  tls:
+    - hosts:
+      - <YOUR HOSTNAME>
+      secretName:  tls-secret
+  rules:
+  - host: <YOUR HOSTNAME>
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: auth-sdc
+          servicePort: 18635

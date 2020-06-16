@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-sdc
+  labels:
+    app : auth-sdc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-sdc
+  template:
+    metadata:
+      labels:
+        app: auth-sdc
+    spec:
+      containers:
+      - name : auth-sdc
+        image: streamsets/datacollector:latest
+        ports:
+        - containerPort: 18630
+        env:
+        - name: SDC_CONF_SDC_BASE_HTTP_URL
+          value: "https://<YOUR SDC HOST:PORT>"
+        - name: SDC_CONF_HTTP_ENABLE_FORWARDED_REQUESTS
+          value: "true"
+        - name: SDC_CONF_HTTP_PORT
+          value: "-1"
+        - name: SDC_CONF_HTTPS_PORT
+          value: "18630"
+        - name: SDC_JAVA_OPTS
+          value: "-Xmx2048m -Xms2048m"
+        volumeMounts:
+        - name: sdc-id
+          mountPath: /data/sdc.id
+          subPath: sdc.id
+        - name: sdc-auth-token
+          mountPath: /etc/sdc/application-token.txt
+          subPath: application-token.txt
+        - name: sdc-keystore
+          mountPath: /etc/sdc/keystore.jks
+          subPath: keystore.jks
+        - name: sdc-keystore
+          mountPath: /etc/sdc/keystore-password.txt
+          subPath: keystore-password.txt
+        - name: dpm-config
+          mountPath: /etc/sdc/dpm.properties
+          subPath: dpm.properties
+      volumes:
+      - name: sdc-id
+        secret:
+          secretName: sdc-id 
+      - name: sdc-auth-token
+        secret:
+          secretName: sdc-auth-token
+      - name: sdc-keystore
+        secret:
+          secretName: sdc-keystore
+      - name: dpm-config
+        configMap:
+          name: dpm-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-sdc
+  labels:
+    app: auth-sdc
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 18635
+    targetPort: 18630
+    protocol: TCP
+  selector:
+    app: auth-sdc 
