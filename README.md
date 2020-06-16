@@ -140,4 +140,6 @@ A few points to keep in mind:
   And the SDC should be available as an Authoring Data Collector:
   
   <img src="images/authoring-sdc.png" width="70%">
+  
+- You can test that the SDC's auth token remains valid by deleting the SDC's Pod and waiting for it get recreated.  The new Pod should resume heartbeating to SDC and function normally.
    
