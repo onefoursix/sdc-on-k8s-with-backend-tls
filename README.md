@@ -4,7 +4,7 @@
 
 Control Agent currently deploys SDCs configured to use HTTP, not HTTPS (there is an enhacement request to add this support, tracked as DPM-3735). This is generally not an issue, as secure access to SDC instances is typically handled by Ingress Controllers that provide TLS termination and route traffic to backend SDCs using HTTP. 
 
-However, if you want "TLS all the way down" and are not using a Service Mesh (like Istio) that automatically provides [mutual TLS](https://www.istioworkshop.io/11-security/01-mtls/), you may wish to manually deploy an Authoring SDC that is registered with Control Hub, with the SDC container itself configured for HTTPS.  
+However, if you want "TLS all the way down" and are not using a Service Mesh that provides [mutual TLS](https://www.istioworkshop.io/11-security/01-mtls/), you will have to manually deploy an Authoring SDC, registered with Control Hub, with the SDC container itself configured for HTTPS.  
 
 The main challenge in manual deployment, rather than using Control Agent, is ensuring that deployed SDC's auth tokens remain valid across SDC Pod death and re-creation. (This is one of main features of Control Agent: watching for new SDC Pods and dynamically generating auth tokens for them.)
 
