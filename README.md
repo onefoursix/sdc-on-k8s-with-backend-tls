@@ -16,7 +16,7 @@ A few points to keep in mind:
 
 - Although SDC deployment is performed outside of Control Hub, SDC will register with Control Hub and serve as a fully functional Authoring SDC.  
 
-- The Ingress Controller used will need to be configured to support [HTTPS as a backend protocol](https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md#backend-protocol) or [SSL/TLS passthrough](https://kubernetes.github.io/ingress-nginx/user-guide/tls/#ssl-passthrough) depending on your ingress strategy. An example of using HTTPS as a backend protocol is provided below.
+- The Ingress will need to be configured to support [HTTPS as a backend protocol](https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md#backend-protocol) or [SSL/TLS passthrough](https://kubernetes.github.io/ingress-nginx/user-guide/tls/#ssl-passthrough) depending on your ingress strategy. An example of using HTTPS as a backend protocol is provided below.
 
 - Only one instance of SDC per deployment is supported.  This applies whether the Authoring SDC is deployed with Control Agent or not.
 
